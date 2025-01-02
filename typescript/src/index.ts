@@ -188,7 +188,6 @@
 // два обьекта пользователь и админ и их аннотирвать их интерфесами
 // функцию приним обьект и типизируем входные параметры (необязательный параметр нужно проверять на существование)
 
-
 // типизация массивов
 // const numbers = [1, 2, 3, 4, 5]; // не яные типы
 // const str = []; // тип any
@@ -335,3 +334,55 @@
 //     developer.level = "senior";
 //   }
 // }
+
+//ПРОДВИНУИТЫЕ ТИПЫ
+
+//слияние типов (types merge)
+type Union1 = "a" | "b" | "c" | "d";
+type Union2 = "a" | "e" | "c" | "i";
+type Union3 = Union1 | Union2; // обьдинили два типа
+type Union4 = Union1 & Union2; // осталивь уникальные типы (пересечение типов) (ведет себя по разному с различными типами данных)
+
+// в обьектах поведенеие немного отличается - будет обьдинение типов
+type Union5 = { a: string; b: string; c: number } & {
+  a: string;
+  t: boolean;
+  z: null;
+};
+
+// const obj: Union5 = {
+//     //при & будут доступны все поля обьявленные в type Union5
+//     //произошло сляние (должны быть одинаковые поля и типы)
+//     //при | будут доступны все поля обьявленные в type Union5
+//     //произошло сляние (будут доступна вариативность)
+// }
+
+//наследование алиасов
+// type User = {
+//   readonly email: string;
+//   readonly login: string;
+//   password: string;
+// };
+// //readonly поле тольео для чтения, относится только к тому обьету в котороми оно определено
+// // его нельзя изменять
+// type Person = {
+//   readonly firstName: string;
+//   lastName: string;
+//   phone?: string;
+//   yearOfBirth?: number;
+// };
+
+// type Employee = {
+//   contractStart: Date;
+// } & User & Person; // расширили типы обьекта Employee
+
+// type Developer = {
+//   skills: string[];
+//   phone: string;
+//   level?: "junior" | "middle" | "senior";
+//   say(): void;
+//   code?: (arg: string) => void;
+// } & Employee;
+
+// // const user1: Developer = {}; //будут доступны все поля
+
