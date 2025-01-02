@@ -93,3 +93,133 @@ true и false) и операций, применимых к ним (||, && и !)
 для них вызывать, такие как .toFixed, .toPrecision, .toString.
 Тип string представляет набор всех строк и производимых с ними
 операций (вроде +, || и &&), включая методы.
+
+//типизация функций
+
+В функции типизируются входные параметры и возвращаемое значение.
+Если функ ничего не возвращает, то исп спец значение :void
+
+never — это тип функции, которая никогда
+ничего не возвращает (выбрасывает исключение или выполняется бесконечно)
+
+//типизация обьектов
+ при создании обьекта, при наведении на его название будет выведено
+ его аннотация - интерфейс
+
+!!практика -  интерфейсы оььекты и функции !!
+// создать два интерфейса пользователь и админ (будут отличаться одним параметром)
+// два обьекта пользователь и админ и их аннотирвать их интерфесами
+// функцию приним обьект и типизируем входные параметры (необязательный параметр нужно проверять на существование)
+
+// interface User {
+//   login: string;
+//   mail: string;
+//   password: string;
+//   isOnline: boolean;
+//   isVisited: Date;
+// }
+
+// interface Admin {
+//   login: string;
+//   mail: string;
+//   password: string;
+//   isOnline: boolean;
+//   isVisited: Date;
+//   role: string;
+// }
+
+// const user1: User = {
+//   login: "Jon",
+//   mail: "jon@mail.ru",
+//   password: "ddfgfdg",
+//   isOnline: true,
+//   isVisited: new Date(2024, 11, 5),
+// };
+
+// const admin: Admin = {
+//   login: "Jon",
+//   mail: "jon@mail.ru",
+//   password: "ddfgfdg",
+//   isOnline: true,
+//   isVisited: new Date(2024, 11, 5),
+//   role: "admin",
+// };
+
+// function login(user: { login: string; password: string; role?: string }) {
+//   if (user.login.length > 0 && user.password.length) {
+//     console.log("Hello", user.login);
+//   }
+//   if (user.role) {
+//     console.log("Hello", user.role);
+//   }
+// }
+
+// login(user1);
+// login(admin);
+ ПРАКТИКА UNION
+
+ // type Level = "junior" | "middle" | "senior";
+
+// interface Developer {
+//   name: string;
+//   level: Level;
+//   skills: string[];
+// }
+
+// const developer: Developer = {
+//   name: "jon",
+//   level: "junior",
+//   skills: ["html", "css", "js"],
+// };
+
+// function gradeDeveloper() {
+// }
+
+// function gradeDeveloper(developer, newLevel) { //реализация без типов
+//   developer.level = newLevel;
+// }
+// function gradeDeveloper(developer:{level:Level}, newLevel:Level) {
+//   //реализация с типами
+//   developer.level = newLevel;
+// }
+
+// gradeDeveloper(developer, "middle");
+
+
+//ПРАКТИКА ENUM
+// interface Developer {
+//   name: string;
+//   level: Grades;
+//   skills: string[];
+// }
+
+// const developer: Developer = {
+//   name: "jon",
+//   level: Grades.Junior,
+//   skills: ["html", "css", "js"],
+// };
+
+// function gradeDeveloper(developer: { level: Grades }) {
+//   if (developer.level === Grades.Junior) {
+//     developer.level = Grades.Middle;
+//   }
+//   if (developer.level === Grades.Middle) {
+//     developer.level = Grades.Senior;
+//   }
+// }
+
+//пример без тайп скрипта
+
+// const developer = {
+//   name: "jon",
+//   level: "Junior",
+//   skills: ["html", "css", "js"],
+// };
+// function gradeDeveloper(developer) {
+//   if (developer.level === "junior") {
+//     developer.level = "middle";
+//   }
+//   if (developer.level === "middle") {
+//     developer.level = "senior";
+//   }
+// }
