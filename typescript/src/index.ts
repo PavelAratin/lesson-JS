@@ -48,6 +48,7 @@
 //   return a * b;
 // }
 // //sum(1,'2') нельзя вызвать с неправилоьными параметрами
+// //sum(1) нельзя вызвать с недостающими
 
 // // функция не возварщ результат
 // function getHello(a: string): void {
@@ -182,8 +183,36 @@
 //   let time = new Date().toISOString();
 //   console.log(time, message, userId);
 // };
+// подробнее о сигнатурах функции
 
-//практика -  интерфейсы оььекты и функции
+//Сигнатура функции в TypeScript — это определение того, как функция может быть вызвана.
+//Она включает в себя список параметров (их имена и типы) и возвращаемый тип функции.
+//Сигнатура функции позволяет компилятору TypeScript проверять типы при вызовах функции,
+//что помогает предотвратить ошибки во время выполнения.
+//примеры сигнутур фунции
+// function add(a, b) { //функция без сигнатур
+//   return a + b;
+// }
+
+// console.log(add(5, 3)); // 8
+// console.log(add("5", "3")); // 53 - тут происходит не сложение а конкатенация
+// function add(a: number, b: number): number { // сигнатура,которая уточняет типы
+//   return a + b;
+// }
+
+// console.log(add(5, 3)); // 8
+// console.log(add("5", "3")); // Ошибка: аргумент типа 'string' не может быть присвоен параметру типа 'number'.
+
+// interface AddFunction { // сигнатура при помощи интерфейсов
+//   (a: number, b: number): number;
+// }
+
+// Для более элегентного решения таких задач в тайп скрипт есть перегрузка функий.
+// Перегрузка функций позволяет объявить несколько сигнатур для одной и той же функции,
+// что дает возможность вызывать ее с различными наборами параметров.
+// Сигнатуры функий будут рассмотеры дальше по курсу - после них будет понятно что такое дженерики
+
+//практика -  интерфейсы обьекты и функции
 // создать два интерфейса пользователь и админ (будут отличаться одним параметром)
 // два обьекта пользователь и админ и их аннотирвать их интерфесами
 // функцию приним обьект и типизируем входные параметры (необязательный параметр нужно проверять на существование)
@@ -304,20 +333,21 @@
 //   skills: string[];
 // }
 
-// const developer: Developer = {
+// const developerJunior: Developer = {
 //   name: "jon",
 //   level: Grades.Junior,
 //   skills: ["html", "css", "js"],
 // };
-
-// function gradeDeveloper(developer: { level: Grades }) {
-//   if (developer.level === Grades.Junior) {
-//     developer.level = Grades.Middle;
+// //function gradeDeveloper(developerJunior: { level: Grades })
+// function gradeDeveloper(developerJunior: Developer) {
+//   if (developerJunior.level === Grades.Junior) {
+//     developerJunior.level = Grades.Middle;
 //   }
-//   if (developer.level === Grades.Middle) {
-//     developer.level = Grades.Senior;
+//   if (developerJunior.level === Grades.Middle) {
+//     developerJunior.level = Grades.Senior;
 //   }
 // }
+// gradeDeveloper(developerJunior)
 
 //пример без тайп скрипта
 
@@ -338,17 +368,17 @@
 //ПРОДВИНУИТЫЕ ТИПЫ
 
 //слияние типов (types merge)
-type Union1 = "a" | "b" | "c" | "d";
-type Union2 = "a" | "e" | "c" | "i";
-type Union3 = Union1 | Union2; // обьдинили два типа
-type Union4 = Union1 & Union2; // осталивь уникальные типы (пересечение типов) (ведет себя по разному с различными типами данных)
+// type Union1 = "a" | "b" | "c" | "d";
+// type Union2 = "a" | "e" | "c" | "i";
+// type Union3 = Union1 | Union2; // обьдинили два типа
+// type Union4 = Union1 & Union2; // осталивь уникальные типы (пересечение типов) (ведет себя по разному с различными типами данных)
 
-// в обьектах поведенеие немного отличается - будет обьдинение типов
-type Union5 = { a: string; b: string; c: number } & {
-  a: string;
-  t: boolean;
-  z: null;
-};
+// // в обьектах поведенеие немного отличается - будет обьдинение типов
+// type Union5 = { a: string; b: string; c: number } & {
+//   a: string;
+//   t: boolean;
+//   z: null;
+// };
 
 // const obj: Union5 = {
 //     //при & будут доступны все поля обьявленные в type Union5

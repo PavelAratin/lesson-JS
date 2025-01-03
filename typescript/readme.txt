@@ -156,6 +156,7 @@ never — это тип функции, которая никогда
 
 // login(user1);
 // login(admin);
+
  ПРАКТИКА UNION
 
  // type Level = "junior" | "middle" | "senior";
