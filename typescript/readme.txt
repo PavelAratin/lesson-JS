@@ -224,3 +224,40 @@ never — это тип функции, которая никогда
 //     developer.level = "senior";
 //   }
 // }
+
+практика на защиту типов
+Опишите функции type guards и выведите их типы.
+
+interface Order {
+  address: string;
+}
+interface TelephoneOrder extends Order {
+  callerNumber: string;
+}
+interface InternetOrder extends Order {
+  email: string;
+}
+
+type PossibleOrders = TelephoneOrder | InternetOrder | undefined;
+
+функция предикат (используется для защиты типа)
+function isAnInternetOrder(order: PossibleOrders) {
+}
+мы должны доказать что :order is InternetOrder - это интернет заказ
+function isAnInternetOrder(order: PossibleOrders):order is InternetOrder {
+    return order && "email" in order - нам нужно булево значение
+    return !!order && "email" in order - так правильно
+}
+
+function isATelephoneOrder(order: PossibleOrders):order is InternetOrder {
+     return order && "callerNumber" in order - нам нужно булево значение
+    return !!order && "callerNumber" in order - так правильно
+}
+
+function makeOrder(order: PossibleOrders) {
+  if (isAnInternetOrder(order)) {
+    console.log(order.email);
+  } else if (isATelephoneOrder(order)) {
+    console.log(order.callerNumber);
+  }
+}

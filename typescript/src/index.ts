@@ -416,3 +416,88 @@
 
 // // const user1: Developer = {}; //будут доступны все поля
 
+//сужение типов
+// function example1(x?: number | string) {
+//   if (typeof x === "string") {
+//     x.toLowerCase();
+//   } else if (typeof x === "number") {
+//     x.toFixed();
+//   } else if (x === undefined) {
+//     console.log("no value");
+//   } else {
+//     x; //сюда код никогда не дойтет, т.к мы уже все возможные варианты перебреали
+//   }
+// }
+
+// function example2(strs: string | string[] | null) {
+//   //интересный момент с null
+//   // if (typeof strs === "object") {}// null тоже обьект, нужно делать другую проверку
+//   // if (Array.isArray(strs)) { //допустимая проверка
+//   if (strs && typeof strs === "object") {
+//     //проверяем на существаование и на тип - тогда ошибки не будет
+//     strs.concat([]);
+//   } else if (typeof strs === "string") {
+//     strs.toLowerCase();
+//   }
+// }
+
+// function example3(num: number[] | Date) {
+//   if (num instanceof Date) { //допустимая проверка (такой метод есть в джс)
+//     num.getMonth();
+//   } else {
+//     num.concat([]);
+//   }
+// }
+
+// type Fish = { swim: () => void };
+// type Bird = { fly: () => void };
+
+// function move(animal: Fish | Bird) {
+//   if ("swim" in animal) { //проверка на существание метода или свойства(ключа)
+//     return animal.swim();
+//   }
+
+//   return animal.fly();
+// }
+
+//защита типа - все что было выше (сужение) это тоже защитники типов
+// но есть особые
+// function isFish(pet: Fish | Bird): pet is Fish { //пример функции предикат - проверяет что-то и возвращает boolean (используется в джс)
+//   return (pet as Fish).swim !== undefined;
+// }
+
+// export function move(animal: Fish | Bird) {
+//   if (isFish(animal)) {
+//     return animal.swim();
+//   }
+
+//   return animal.fly();
+// }
+
+// практика защиты типов
+
+// interface Order {
+//   address: string;
+// }
+// interface TelephoneOrder extends Order {
+//   callerNumber: string;
+// }
+// interface InternetOrder extends Order {
+//   email: string;
+// }
+
+// type PossibleOrders = TelephoneOrder | InternetOrder | undefined;
+
+// function isAnInternetOrder(order: PossibleOrders) {
+// }
+
+// function isATelephoneOrder(order: PossibleOrders) {
+// }
+
+// function makeOrder(order: PossibleOrders) {
+//   if (isAnInternetOrder(order)) {
+//     console.log(order.email);
+//   } else if (isATelephoneOrder(order)) {
+//     console.log(order.callerNumber);
+//   }
+// }
