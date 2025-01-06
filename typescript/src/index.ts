@@ -557,7 +557,6 @@
 // let x = head('df');
 // x + 1; //при массиве булеан будет ошибка - нужна другая операция
 
-
 // символ !
 
 // let word: string | null = null;
@@ -611,3 +610,78 @@
 
 // // const femalePeople = people.find(person => person.sex === 'female') // возможно undefined
 // const femalePeople = people.find(person => person.sex === 'female')! // точно undefined не будет
+
+//Унгиверсальные типы ДЖЕНЕРИКИ
+// проблематика перегрузок - избыточность кода
+// function head(value: string): string;
+// function head(value: number[]): number;
+// function head(value: string[]): string;
+// function head(value: boolean[]): boolean;
+// function head(value: Date[]): Date;
+// function head(value: any): any {
+//   return value[0];
+// }
+
+// //проблема - обьект приходящий ответом с сервера может выдавать одинкаковые ключи но разные значения
+// interface ModelData {
+//   title: string,
+//   value: string, // number или [] или boolean - при дальнейшей работе будет проблемой и нужно выполнять проверку типа
+// }
+
+// дженерики (обобщения) - специальные !переменные!, помогающие объявить сложный тип.
+
+// Array<string> - альтернативная запись массива - дженерик
+// string[]
+// Promise<number>
+
+// дженерик обьявляется в <> скобках после названия функции перед круглыми скобками (если говорим про функции)
+// <T> - T динамическая переменная - она может иметь любое название (но принято Т)
+
+// function head <T>(value: T): T {
+//   return value;
+// }
+// head(["12q", "asas"]);
+// head(1);
+// head('sdf');
+
+// const head1 = <T>(value: T[]): T => value[0]; //пример стрелочной функции
+
+// function toArray<T>(...arg: T[]): T[] {
+//   return arg;
+// }
+// toArray<number>(1, 2, 3);
+// toArray("ad", "asd");
+
+// interface ModelData<T> { //дженерик для интерфейса
+//   title: string;
+//   value: T; // number [] boolean
+// }
+
+// const obj1: ModelData<number> = { //применения дженерика и интерфеса для обьекта
+//   title: "asd",
+//   value: 12,
+// };
+// // obj1.value = true //ошибка - value определено как число
+
+// const obj2: ModelData<Array<number>> = { // в качастве дженерика передан массив чисел
+//   title: "12sad",
+//   value: [1234],
+// };
+
+//Практика ДЖЕНЕРИКИ
+//Затипизируйте данную функцию:
+
+// function append(el, list) {
+//   return list.concat(el);
+// }
+
+// append(1, [1, 2, 3]); //нет ошибки
+// append('sdf', [1, 2, 3]); //нет ошибки
+
+//типизация
+// function append<T>(el: T, list: T[]) {
+//   return list.concat(el);
+// }
+
+// append(1, [1, 2, 3]); //нет ошибки
+// append('sdf', [1, 2, 3]); //ошибка
