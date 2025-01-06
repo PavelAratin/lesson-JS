@@ -501,3 +501,113 @@
 //     console.log(order.callerNumber);
 //   }
 // }
+
+//ПЕРЕГРУЗКА ФУНКЦИЙ
+
+//простой пример перегрузки функций
+
+// function add(a: string | number, b: string | number): string | number {
+//   return a + b; //проблема - строку с числом складывать нельзя - нужно писать еще одну функцию
+// }
+
+//перегрузка функций может помочь решить эту проблему
+// function add(a: number, b: number): number;
+// function add(a: string, b: string): string;
+// function add(a: any, b: any): any {
+//   // в таких случаях можно импользовать any
+//   return a + b;
+// }
+// add(1, 2);
+
+// type AsyncCb = (res: number) => number; //алиас функции (сигнатура)
+
+// let asyncCb1F: AsyncCb = (res) => res; //сама функции колллюбэк
+
+// function asyncSum(a: number, b: number): Promise<number>; //перегрузка - возвращаем промис
+// function asyncSum(a: number, b: number, cb: AsyncCb): number; //перегрузка
+// function asyncSum(a: number, b: number, cb?: AsyncCb): any {
+//   const result = a + b;
+//   if (cb) {
+//     //проверка на сущ коллбэка
+//     return cb(result);
+//   }
+
+//   return Promise.resolve(result);
+// }
+// asyncSum(1, 2, asyncCb1F); //колбэк необяз парам - если не передать то лшибки не будет
+
+//Практика на перегрузку функций
+
+//Дана функция head, которая возвращает либо первый символ переданной строки, либо первый элемент переданного массива.
+//Приведенные типы функции заведомо избыточны. Необходимо переписать их, используя подход перегрузки.
+
+// function head(value: string | number[] | boolean[]): string | number | boolean {
+//   return value[0];
+// }
+
+// let x = head([1])
+// x + 1// будет ошибка , что бы не передали в функцию - поможет перегрузка
+
+// function head(value: string): string;
+// function head(value: number[]): number;
+// function head(value: boolean[]): boolean;
+// function head(value: any): any {
+//   return value[0];
+// }
+// let x = head('df');
+// x + 1; //при массиве булеан будет ошибка - нужна другая операция
+
+
+// символ !
+
+// let word: string | null = null;
+// const num = 10
+
+// if (num > 5) {
+//   word = 'abc'
+// }
+
+// // console.log(word.toLowerCase()) // ошибка значение может быть и null
+// console.log(word!.toLowerCase()) // ! - подтверждает что это именно строка, а не null
+
+// function printName(name?: string) {
+// //   const fullName: string = name; // ошибка - может быть null или undefained
+//   const fullName: string = name!;
+// }
+
+// interface Person {
+//   name: string
+//   age: number
+//   sex: 'female' | 'male'
+// }
+
+// function printName2(person?: Person) {
+// //   console.log(person.name) // может быть undefained
+//   console.log(person!.name)
+// }
+
+// const people: Person[] = [
+//   {
+//     name: 'Gran',
+//     age: 70,
+//     sex: 'female'
+//   },
+//   {
+//     name: 'Papa',
+//     age: 72,
+//     sex: 'male'
+//   },
+//   {
+//     name: 'Mom',
+//     age: 35,
+//     sex: 'female'
+//   },
+//   {
+//     name: 'Dad',
+//     age: 38,
+//     sex: 'male'
+//   }
+// ]
+
+// // const femalePeople = people.find(person => person.sex === 'female') // возможно undefined
+// const femalePeople = people.find(person => person.sex === 'female')! // точно undefined не будет

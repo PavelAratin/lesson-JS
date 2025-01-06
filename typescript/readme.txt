@@ -249,6 +249,8 @@ function isAnInternetOrder(order: PossibleOrders):order is InternetOrder {
     return !!order && "email" in order - так правильно
 }
 
+// оператор in проверяет , есть ли указанное свойство в обьекте или в цепочке его прототипов
+
 function isATelephoneOrder(order: PossibleOrders):order is InternetOrder {
      return order && "callerNumber" in order - нам нужно булево значение
     return !!order && "callerNumber" in order - так правильно
